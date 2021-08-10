@@ -54,7 +54,7 @@ def buildAndRegisterDockerImage() {
     sh "aws ecr get-login-password --region ${env.AWS_REGION} | docker login --username AWS --password-stdin ${env.REGISTRY_URL}"
     //echo "Build ${env.REGISTRY_URL}/${env.IMAGE_NAME}"
     //sh "docker build -t ${env.REGISTRY_URL}/${env.IMAGE_NAME} ."
-    sh "docker-compose -f src/docker-compose.yml build ."
+    sh "docker-compose -f src/docker-compose.yml build "
     //echo "Register ${env.IMAGE_NAME} at ${env.REGISTRY_URL}"
     sh "docker-compose -f src/docker-compose.yml push"
     echo "Disconnect from registry at ${env.REGISTRY_URL}"
