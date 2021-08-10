@@ -62,7 +62,7 @@ def buildAndRegisterDockerImage() {
     sh "docker image ls --format '{{.Repository}}' | grep ${env.REPO_NAME} > repolist"
     sh "cat repolist"
     sh ''' for repo in $(cat repolist); do 
-        reponame=$(echo $repo | awk -F/ '{print $1}')
+        reponame=$(echo $repo | awk -F/ '{print $2}')
         aws ecr describe-repositories --repository-names ${reponame} || aws ecr create-repository --repository-name ${reponame}
         done
     '''
