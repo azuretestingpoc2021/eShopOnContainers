@@ -54,11 +54,10 @@ def buildAndRegisterDockerImage() {
     echo "Connect to registry at ${env.REGISTRY_URL}" 
     sh "aws ecr get-login-password --region ${env.AWS_REGION} | docker login --username AWS --password-stdin ${env.REGISTRY_URL}"
     sh """ echo "y" | docker image prune -a"""
-    //echo "Build ${env.REGISTRY_URL}/${env.IMAGE_NAME}"
-    //sh "docker build -t ${env.REGISTRY_URL}/${env.IMAGE_NAME} ."
+ 
     sh "docker-compose -f src/docker-compose.yml build "
     sh """echo "REGISTRY=${env.REGISTRY_URL}/${env.REPO_NAME}"> .env """
-    //echo "Register ${env.IMAGE_NAME} at ${env.REGISTRY_URL}"
+  
     sh "docker image ls --format '{{.Repository}}' | grep ${env.REPO_NAME} > repolist"
     sh "cat repolist"
     sh ''' for repo in $(cat repolist); do 
@@ -69,8 +68,7 @@ def buildAndRegisterDockerImage() {
         aws ecr describe-repositories --repository-names ${reponame}/${imagename} || aws ecr create-repository --repository-name ${reponame}/${imagename}
         done
     '''
-     //reponame= $($env.REPO_NAME/$imagename)
-    //sh "aws ecr describe-repositories --repository-names ${REPO_NAME} || aws ecr create-repository --repository-name ${REPO_NAME}"
+     
     sh "docker-compose -f src/docker-compose.yml push"
     
 
