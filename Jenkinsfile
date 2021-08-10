@@ -59,7 +59,11 @@ def buildAndRegisterDockerImage() {
     sh "docker-compose -f src/docker-compose.yml build "
     sh """echo "REGISTRY=${env.REGISTRY_URL}/${env.REPO_NAME}"> .env """
     //echo "Register ${env.IMAGE_NAME} at ${env.REGISTRY_URL}"
-    sh "docker image ls"
+    sh "docker image ls --format '{{.Repository}}' | grep ${env.REPO_NAME} > repolist"
+    sh "cat repolist"
+    sh """ for repo in $(cat repolist); do 
+    
+    """
     //sh "aws ecr describe-repositories --repository-names ${REPO_NAME} || aws ecr create-repository --repository-name ${REPO_NAME}"
     //sh "docker-compose -f src/docker-compose.yml push"
     
