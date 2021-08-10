@@ -55,9 +55,11 @@ def buildAndRegisterDockerImage() {
     //echo "Build ${env.REGISTRY_URL}/${env.IMAGE_NAME}"
     //sh "docker build -t ${env.REGISTRY_URL}/${env.IMAGE_NAME} ."
     sh "docker-compose -f src/docker-compose.yml build "
+    sh """echo "REGISTRY=${env.REGISTRY_URL}"> .env """
     //echo "Register ${env.IMAGE_NAME} at ${env.REGISTRY_URL}"
     sh "docker-compose -f src/docker-compose.yml push"
     echo "Disconnect from registry at ${env.REGISTRY_URL}"
+    sh "docker image prune -a"
     sh "docker logout ${env.REGISTRY_URL}"
 }
 
