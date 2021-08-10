@@ -13,11 +13,12 @@ pipeline {
     stage (init) {
       steps { initialize() }
     }
-  }
+  
     stage("Build and Register Image") {
        agent { label 'ubuntu_micro'}
        steps { script { buildAndRegisterDockerImage() } }
     }  
+}
 }
   
   
