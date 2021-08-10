@@ -63,11 +63,13 @@ def buildAndRegisterDockerImage() {
     sh "cat repolist"
     sh ''' for repo in $(cat repolist); do 
         imagename=$(echo $repo | awk -F/ '{print $3}')
-        reponame= ${env.REPO_NAME}/${imagename}
+        reponame=$(echo $repo | awk -F/ '{print $2}')
+      
         
-        aws ecr describe-repositories --repository-names ${reponame} || aws ecr create-repository --repository-name ${reponame}
+        aws ecr describe-repositories --repository-names ${reponame}/${imagename} || aws ecr create-repository --repository-name ${reponame}/${imagename}
         done
     '''
+     //reponame= $($env.REPO_NAME/$imagename)
     //sh "aws ecr describe-repositories --repository-names ${REPO_NAME} || aws ecr create-repository --repository-name ${REPO_NAME}"
     //sh "docker-compose -f src/docker-compose.yml push"
     
