@@ -71,7 +71,7 @@ def buildAndRegisterDockerImage() {
     '''
      //reponame= $($env.REPO_NAME/$imagename)
     //sh "aws ecr describe-repositories --repository-names ${REPO_NAME} || aws ecr create-repository --repository-name ${REPO_NAME}"
-    //sh "docker-compose -f src/docker-compose.yml push"
+    sh "docker-compose -f src/docker-compose.yml push"
     
 
     
