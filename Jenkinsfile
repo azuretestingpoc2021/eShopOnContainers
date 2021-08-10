@@ -53,12 +53,17 @@ def buildAndRegisterDockerImage() {
     sh "sudo chmod 777 /var/run/docker.sock"
     echo "Connect to registry at ${env.REGISTRY_URL}" 
     sh "aws ecr get-login-password --region ${env.AWS_REGION} | docker login --username AWS --password-stdin ${env.REGISTRY_URL}"
+    sh "docker image prune -a"
     //echo "Build ${env.REGISTRY_URL}/${env.IMAGE_NAME}"
     //sh "docker build -t ${env.REGISTRY_URL}/${env.IMAGE_NAME} ."
     sh "docker-compose -f src/docker-compose.yml build "
     sh """echo "REGISTRY=${env.REGISTRY_URL}/${env.REPO_NAME}"> .env """
     //echo "Register ${env.IMAGE_NAME} at ${env.REGISTRY_URL}"
-    sh "docker-compose -f src/docker-compose.yml push"
+    sh "docker images ls"
+    //sh "aws ecr describe-repositories --repository-names ${REPO_NAME} || aws ecr create-repository --repository-name ${REPO_NAME}"
+    //sh "docker-compose -f src/docker-compose.yml push"
+    
+
     
     sh "docker image prune -a"
     echo "Disconnect from registry at ${env.REGISTRY_URL}"
