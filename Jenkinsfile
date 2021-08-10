@@ -39,6 +39,7 @@ def initialize() {
    // env.SYSTEM_NAME = "DSO"
     env.AWS_REGION = "us-east-2"
     env.REGISTRY_URL = "785131266845.dkr.ecr.us-east-2.amazonaws.com"
+    env.RepoName = "eshop"
     env.MAX_ENVIRONMENTNAME_LENGTH = 32
 
     
@@ -55,7 +56,7 @@ def buildAndRegisterDockerImage() {
     //echo "Build ${env.REGISTRY_URL}/${env.IMAGE_NAME}"
     //sh "docker build -t ${env.REGISTRY_URL}/${env.IMAGE_NAME} ."
     sh "docker-compose -f src/docker-compose.yml build "
-    sh """echo "REGISTRY=${env.REGISTRY_URL}"> .env """
+    sh """echo "REGISTRY=${env.REGISTRY_URL}/${env.RepoName}"> .env """
     //echo "Register ${env.IMAGE_NAME} at ${env.REGISTRY_URL}"
     sh "docker-compose -f src/docker-compose.yml push"
     echo "Disconnect from registry at ${env.REGISTRY_URL}"
