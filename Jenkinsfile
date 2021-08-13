@@ -73,7 +73,7 @@ def buildAndRegisterDockerImage() {
     
 
     
-    sh """ echo "y" | docker image prune -a"""
+ //   sh """ echo "y" | docker image prune -a"""
     echo "Disconnect from registry at ${env.REGISTRY_URL}"
     sh "docker logout ${env.REGISTRY_URL}"
 }
