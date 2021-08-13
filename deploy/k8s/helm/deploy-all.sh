@@ -71,7 +71,7 @@ image_tag='latest'
 push_images=''
 skip_infrastructure=''
 use_local_k8s=''
-namespace='eshop'
+namespace='default'
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
